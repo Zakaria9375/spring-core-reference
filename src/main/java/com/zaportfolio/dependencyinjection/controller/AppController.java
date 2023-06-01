@@ -8,26 +8,27 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AppController {
-    //dependency injection by constructor autowired is optional as you only have one constructor
-    // use it when you have required dependency
-    // setter injection when you have optional dependencies
-    // (if dependency not provided your app can provide reasonable default logic)
+
     private final Coach coach;
+    private final Coach coach2;
+
    @Autowired
-    public AppController(@Qualifier("tennisCoach") Coach coach) {
+    public AppController(@Qualifier("swimCoach") Coach coach,@Qualifier("tennisCoach") Coach coach2) {
         this.coach = coach;
+       this.coach2 = coach2;
+   }
+    @GetMapping("/check")
+    public String check(){
+        return"comparing beans "+ (coach == coach2);
+    }
+    @GetMapping("/swim")
+    public String getSwim(){
+       return coach.doWorkout();
     }
 
-
-    // NOT IT IS REQUIRED THAT COACH attribute is not final
-
-//    @Autowired
-//    public void setCoach(Coach theCoach){
-//        coach=theCoach;
-//    }
     @GetMapping("/workout")
     public String getWorkout(){
-        return coach.doWorkout();
+        return coach2.doWorkout();
     }
 
 }

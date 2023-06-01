@@ -8,4 +8,5 @@ public class CricketCoach implements Coach{
     public String doWorkout() {
         return "Do some push ups, now please !!!!!";
     }
+
 }
